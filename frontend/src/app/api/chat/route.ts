@@ -17,13 +17,16 @@ const mcpClient = await experimental_createMCPClient({
 const getProducts = tool({
   description: "Get all products from the database",
   parameters: z.object({}),
-  execute: async () => await fetchGuitars(),
+  execute: async () => {
+    const guitars = await fetchGuitars();
+    return guitars;
+  },
 });
 
 const recommendGuitar = tool({
   description: "Use this tool to recommend a guitar to the user",
   parameters: z.object({
-    guitarId: z.string().describe("The id of the guitar to recommend"),
+    guitarId: z.number().describe("The id of the guitar to recommend"),
   }),
 });
 
@@ -55,8 +58,11 @@ You can purchase a product by using the purchase tool.
 After purchasing a product tell the customer they've made a great choice and their order will be processed soon and they will be playing their new guitar in no time.
     `,
     maxSteps: 20,
-    tools: tools,
 
+    //todo not working
+    // tools: tools,
+
+    //! working
     // tools: {
     //   // !MCP Tools
     //   //  ...tools,
