@@ -14,11 +14,34 @@ const mcpClient = await experimental_createMCPClient({
   name: "Order Service",
 });
 
-const tools = await mcpClient.tools();
-console.log("TOOLS", tools);
+const getProducts = tool({
+  description: "Get all products from the database",
+  parameters: z.object({}),
+  execute: async () => await fetchGuitars(),
+});
+
+const recommendGuitar = tool({
+  description: "Use this tool to recommend a guitar to the user",
+  parameters: z.object({
+    guitarId: z.string().describe("The id of the guitar to recommend"),
+  }),
+});
+
+async function getTools() {
+  const mcpTools = await mcpClient.tools();
+  // console.log("MCP TOOLS", mcpTools);
+  return {
+    ...mcpTools,
+    getProducts,
+    recommendGuitar,
+  };
+}
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
+
+  const tools = await getTools();
+  console.log("TOOLS", tools);
 
   const result = streamText({
     model: openai("gpt-4o-mini"),
@@ -31,54 +54,56 @@ You can get a list of products by using the getInventory tool.
 You can purchase a product by using the purchase tool.
 After purchasing a product tell the customer they've made a great choice and their order will be processed soon and they will be playing their new guitar in no time.
     `,
+    maxSteps: 20,
+    tools: tools,
 
-    tools: {
-      // !MCP Tools
-      ...tools,
-      // !Server Tools
-      getProducts: tool({
-        description: "Get all products from the database",
-        parameters: z.object({}),
-        execute: async () => {
-          const guitars = await fetchGuitars();
-          return guitars;
-        },
-      }),
-      weather: tool({
-        description: "Get the weather in a location (fahrenheit)",
-        parameters: z.object({
-          location: z.string().describe("The location to get the weather for"),
-        }),
-        execute: async ({ location }) => {
-          const temperature = Math.round(Math.random() * (90 - 32) + 32);
-          return {
-            location,
-            temperature,
-          };
-        },
-      }),
-      convertFahrenheitToCelsius: tool({
-        description: "Convert a temperature in fahrenheit to celsius",
-        parameters: z.object({
-          temperature: z
-            .number()
-            .describe("The temperature in fahrenheit to convert"),
-        }),
-        execute: async ({ temperature }) => {
-          const celsius = Math.round((temperature - 32) * (5 / 9));
-          return {
-            celsius,
-          };
-        },
-      }),
-      // !Client Tools
-      recommendGuitar: tool({
-        description: "Use this tool to recommend a guitar to the user",
-        parameters: z.object({
-          guitarId: z.number().describe("The id of the guitar to recommend"),
-        }),
-      }),
-    },
+    // tools: {
+    //   // !MCP Tools
+    //   //  ...tools,
+    //   // !Server Tools
+    //   getProducts: tool({
+    //     description: "Get all products from the database",
+    //     parameters: z.object({}),
+    //     execute: async () => {
+    //       const guitars = await fetchGuitars();
+    //       return guitars;
+    //     },
+    //   }),
+    //   // !Client Tools
+    //   recommendGuitar: tool({
+    //     description: "Use this tool to recommend a guitar to the user",
+    //     parameters: z.object({
+    //       guitarId: z.number().describe("The id of the guitar to recommend"),
+    //     }),
+    //   }),
+    //   weather: tool({
+    //     description: "Get the weather in a location (fahrenheit)",
+    //     parameters: z.object({
+    //       location: z.string().describe("The location to get the weather for"),
+    //     }),
+    //     execute: async ({ location }) => {
+    //       const temperature = Math.round(Math.random() * (90 - 32) + 32);
+    //       return {
+    //         location,
+    //         temperature,
+    //       };
+    //     },
+    //   }),
+    //   convertFahrenheitToCelsius: tool({
+    //     description: "Convert a temperature in fahrenheit to celsius",
+    //     parameters: z.object({
+    //       temperature: z
+    //         .number()
+    //         .describe("The temperature in fahrenheit to convert"),
+    //     }),
+    //     execute: async ({ temperature }) => {
+    //       const celsius = Math.round((temperature - 32) * (5 / 9));
+    //       return {
+    //         celsius,
+    //       };
+    //     },
+    //   }),
+    // },
   });
 
   return result.toDataStreamResponse();
