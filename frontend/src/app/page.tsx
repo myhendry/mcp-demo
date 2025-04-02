@@ -10,6 +10,7 @@ import { RecommendedGuitar } from "../components/recommended-guitar";
 
 export default function Home() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
+    // api: "/api/completion",
     maxSteps: 5,
     onToolCall: (call) => {
       if (call.toolCall.toolName === "recommendGuitar") {
