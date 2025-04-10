@@ -1,0 +1,43 @@
+{
+  "name": "web-tanstack",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "drizzle-kit": "^0.30.6",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^1.3.7",
+    "@neondatabase/serverless": "^1.0.0",
+    "@radix-ui/react-slot": "^1.1.2",
+    "@tailwindcss/postcss": "^4.1.3",
+    "@tanstack/react-router": "^1.114.34",
+    "@tanstack/start": "^1.114.34",
+    "ai": "^4.3.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.41.0",
+    "lucide-react": "^0.487.0",
+    "postcss": "^8.5.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.1.0",
+    "tailwindcss": "^4.1.3",
+    "tw-animate-css": "^1.2.5",
+    "vinxi": "^0.5.3",
+    "zod": "^3.24.2"
+  }
+}
