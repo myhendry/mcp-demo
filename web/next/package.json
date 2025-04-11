@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:mcp": "concurrently -n \"next,fulfillment,products,mcp-server\" -c \"blue,green,yellow,magenta\" -k --restart-tries 3 --restart-after 3000 -p \"[{name}]\" \"bun run dev\" \"cd ../.. && cd server/api-fulfillment && bun run dev\" \"cd ../../server/api-products && bun run dev\" \"cd ../.. && cd server/mcp-server-js && node src/sse-server.js\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -36,6 +37,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "concurrently": "^9.1.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

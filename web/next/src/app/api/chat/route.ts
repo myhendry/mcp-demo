@@ -76,7 +76,7 @@ export async function POST(req: Request) {
 
     const result = streamText({
       //! 👍 working
-      // model: anthropic("claude-3-5-sonnet-20240620"),
+      model: anthropic("claude-3-5-sonnet-20240620"),
       //! ❌ not working
       /*
       page.tsx:18 Chat error: 
@@ -84,7 +84,7 @@ export async function POST(req: Request) {
       In context=(), object schema missing properties.
       */
       // model: openai("gpt-4o-mini"),
-      model: openai("gpt-4o-mini-2024-07-18"),
+      // model: openai("gpt-4o-mini-2024-07-18"),
       // model: openai("o3-mini"),
       messages,
       system: `You are an AI for a music store.
