@@ -75,17 +75,10 @@ export async function POST(req: Request) {
     console.log("TOOLS", tools);
 
     const result = streamText({
-      //! 👍 working
-      model: anthropic("claude-3-5-sonnet-20240620"),
-      //! ❌ not working
-      /*
-      page.tsx:18 Chat error: 
-      Error: Invalid schema for function 'getOrders': 
-      In context=(), object schema missing properties.
-      */
-      // model: openai("gpt-4o-mini"),
+      model: openai("gpt-4o-mini"),
       // model: openai("gpt-4o-mini-2024-07-18"),
       // model: openai("o3-mini"),
+      // model: anthropic("claude-3-5-sonnet-20240620"),
       messages,
       system: `You are an AI for a music store.
 There are products available for purchase. You can recommend a product to the user.

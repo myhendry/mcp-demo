@@ -10,9 +10,9 @@ import { RecommendedGuitar } from "../components/recommended-guitar";
 
 export default function Home() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
-    // api: "/api/crawl",
-    // api: "http://127.0.0.1:8000/api/chat",
-
+    // todo
+    // api: "/api/chat", // set mcp-server-js mcp setup
+    api: "http://127.0.0.1:8000/api/v1/chat", // set pydantic-fastapi api setup
     maxSteps: 20,
     onError: (error) => {
       console.error("Chat error:", error);
@@ -20,15 +20,15 @@ export default function Home() {
     onResponse: (response) => {
       console.log("Chat response:", response);
     },
-    // onToolCall: (call) => {
-    //   console.log("Tool call:", call);
-    //   if (call.toolCall.toolName === "recommendGuitar") {
-    //     return "Handled by the UI";
-    //   }
-    //   if (call.toolCall.toolName === "crawlWeb") {
-    //     return "Processing web crawl...";
-    //   }
-    // },
+    onToolCall: (call) => {
+      console.log("Tool call:", call);
+      if (call.toolCall.toolName === "recommendGuitar") {
+        return "Handled by the UI";
+      }
+      if (call.toolCall.toolName === "crawlWeb") {
+        return "Processing web crawl...";
+      }
+    },
   });
 
   return (
