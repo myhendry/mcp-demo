@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:mcp": "concurrently -n \"next,fulfillment,products,mcp-server\" -c \"blue,green,yellow,magenta\" -k --restart-tries 3 --restart-after 3000 -p \"[{name}]\" \"bun run dev\" \"cd ../.. && cd server/api-fulfillment && bun run dev\" \"cd ../../server/api-products && bun run dev\" \"cd ../.. && cd server/mcp-server-js && node src/sse-server.js\"",
+    "dev:pydantic": "concurrently --force-color -n \"next, pydantic-server\" -c \"blue, green\" -k --restart-tries 3 --restart-after 3000 -p \"[{name}]\" \"bun run dev\" \"cd ../.. && cd server/pydantic-fastapi && poetry run fastapi dev main.py\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
