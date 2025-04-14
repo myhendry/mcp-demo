@@ -1,5 +1,4 @@
-import { json } from "@tanstack/start";
-import { createAPIFileRoute } from "@tanstack/start/api";
+import { createAPIFileRoute } from "@tanstack/react-start/api";
 import { experimental_createMCPClient, streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
 

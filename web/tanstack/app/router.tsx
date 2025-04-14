@@ -1,16 +1,15 @@
-// app/router.tsx
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
+// import { DefaultCatchBoundary } from "./components/DefaultCatchBoundary";
+// import { NotFound } from "./components/NotFound";
 
-/*
-    This is the file that will dictate the behavior of TanStack Router used within Start.
-    Here, you can configure everything from the default preloading functionality to caching staleness.
-*/
 export function createRouter() {
   const router = createTanStackRouter({
     routeTree,
-    scrollRestoration: true,
     defaultPreload: "intent",
+    // defaultErrorComponent: DefaultCatchBoundary,
+    // defaultNotFoundComponent: () => <NotFound />,
+    scrollRestoration: true,
   });
 
   return router;

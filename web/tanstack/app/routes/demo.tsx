@@ -1,7 +1,6 @@
-// app/routes/index.tsx
 import * as fs from "node:fs";
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/start";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 
 const filePath = "count.txt";
@@ -40,10 +39,6 @@ function Demo() {
 
   return (
     <>
-      <div className="flex gap-4">
-        <Link to="/demo">Demo</Link>
-        <Link to="/chat">Chat</Link>
-      </div>
       <Button onClick={handleClick}>Click me</Button>
       <button
         type="button"

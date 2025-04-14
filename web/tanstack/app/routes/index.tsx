@@ -23,14 +23,9 @@ function RouteComponent() {
   const { posts, f } = Route.useLoaderData();
   return (
     <div>
-      Hello!
-      <div className="flex gap-4">
-        <Link to="/demo">Demo</Link>
-        <Link to="/chat">Chat</Link>
-      </div>
       <div className="p-12">
         <ul>
-          {posts.map((p) => (
+          {posts.map((p: any) => (
             <li key={p.id}>
               {p.id} {p.name}
             </li>

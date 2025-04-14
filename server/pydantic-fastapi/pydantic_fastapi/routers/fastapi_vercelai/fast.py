@@ -6,6 +6,9 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from openai import OpenAI
+from pydantic_ai import Agent
+from pydantic_ai.models.openai import OpenAIModel
+
 from pydantic_fastapi.routers.fastapi_vercelai.utils.prompt import ClientMessage, convert_to_openai_messages
 from pydantic_fastapi.routers.fastapi_vercelai.utils.tools import get_current_weather
 
@@ -16,6 +19,10 @@ router = APIRouter()
 client = OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
 )
+
+model = OpenAIModel("gpt-4o-mini")
+
+agent1 = Agent(model=model, system_prompt="You are a funny assistant that makes jokes at every query")
 
 class Request(BaseModel):
     messages: List[ClientMessage]
@@ -124,6 +131,9 @@ def stream_text(messages: List[ClientMessage], protocol: str = 'data'):
 @router.post('/')
 async def handle_chat_data(request: Request, protocol: str = Query('data')):
     messages = request.messages
+
+    message = messages[-1].content
+
     openai_messages = convert_to_openai_messages(messages)
     response = StreamingResponse(stream_text(openai_messages, protocol))
     response.headers['x-vercel-ai-data-stream'] = 'v1'

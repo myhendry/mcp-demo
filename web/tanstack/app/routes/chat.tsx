@@ -20,10 +20,6 @@ function RouteComponent() {
 
   return (
     <>
-      <div className="flex gap-4">
-        <Link to="/demo">Demo</Link>
-        <Link to="/chat">Chat</Link>
-      </div>
       <div className="flex flex-col w-full max-w-lg py-24 mx-auto stretch">
         {messages.map((message) => (
           <div key={message.id} className="whitespace-pre-wrap">

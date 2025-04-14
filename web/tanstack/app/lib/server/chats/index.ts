@@ -1,4 +1,4 @@
-import { createServerFn } from "@tanstack/start";
+import { createServerFn } from "@tanstack/react-start";
 import { experimental_createMCPClient, streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
 
